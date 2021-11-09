@@ -3,11 +3,13 @@ import useSWR from 'swr'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/dist/client/router'
-import { Container, List, ListItem, ListItemText } from '@mui/material'
+import {Layout, Typography} from 'antd'
 
 import fetcher from '../../lib/fetcher'
 import { useToken } from '../../hook/useToken'
 import Header from '../../components/Header'
+
+const { Paragraph } = Typography
 
 const EventDetail: NextPage = () => {
   const router = useRouter()
@@ -36,39 +38,21 @@ const EventDetail: NextPage = () => {
 
       <Header />
 
-      <Container maxWidth="sm">
-        <h1>{data.data.name}</h1>
+      <Layout>
+        <Paragraph>
+          <h1>{data.data.name}</h1>
 
-        <List>
-          <ListItem>
-            <ListItemText primary={data.data.budget} />
-          </ListItem>
-
-          <ListItem>
-            <ListItemText primary={data.data.start_at} />
-          </ListItem>
-
-          <ListItem>
-            <ListItemText primary={data.data.end_at} />
-          </ListItem>
-
-          <ListItem>
-            <ListItemText primary={data.data.max_size} />
-          </ListItem>
-
-          <ListItem>
-            <ListItemText primary={data.data.location} />
-          </ListItem>
-
-          <ListItem>
-            <ListItemText primary={data.data.description} />
-          </ListItem>
-
-          <ListItem>
-            <ListItemText primary={data.data.organizer.name} />
-          </ListItem>
-        </List>
-      </Container>
+          <ul>
+            <li>{data.data.budget}</li>
+            <li>{data.data.start_at}</li>
+            <li>{data.data.end_at}</li>
+            <li>{data.data.max_size}</li>
+            <li>{data.data.location}</li>
+            <li>{data.data.description}</li>
+            <li>{data.data.organizer.name}</li>
+          </ul>
+        </Paragraph>
+      </Layout>
     </div>
   )
 }

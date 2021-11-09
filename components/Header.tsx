@@ -1,4 +1,4 @@
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { Button, PageHeader } from 'antd';
 import { useRouter } from "next/dist/client/router";
 import React from "react";
 import useStorage from "../hook/useStorage";
@@ -16,17 +16,24 @@ const Header = () => {
 
   if (token) {
     return (
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Event
-          </Typography>
-          <Button color="inherit" onClick={handleLogout}>Log out</Button>
-        </Toolbar>
-      </AppBar>
+      <PageHeader
+        title="BeerKeeper"
+        extra={[
+          <Button
+            key="1"
+            type="primary"
+            danger
+            onClick={handleLogout}
+          >
+            Log Out
+          </Button>,
+        ]}
+      >
+      </PageHeader>
     )
   } else {
-    return <></>
+    return <PageHeader title="BeerKeeper" />
+
   }
 }
 
