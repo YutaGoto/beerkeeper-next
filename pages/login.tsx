@@ -16,7 +16,7 @@ interface LoginInfo {
 
 const Login = (): ReactElement => {
   const {setItem} = useStorage()
-  const router = useRouter();
+  const router = useRouter()
 
   const onSubmit = (values: LoginInfo) => {
     const body = JSON.stringify({

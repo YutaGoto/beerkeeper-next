@@ -1,15 +1,16 @@
 import type { NextPage } from 'next'
 import useSWR from 'swr'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/dist/client/router'
-import {Layout, Typography} from 'antd'
+import {Layout, Typography, Row, Col} from 'antd'
+import { BookOutlined, ClockCircleOutlined, IdcardOutlined, MoneyCollectOutlined, PushpinOutlined, UserOutlined } from '@ant-design/icons';
 
 import fetcher from '../../lib/fetcher'
 import { useToken } from '../../hook/useToken'
 import Header from '../../components/Header'
+import React from 'react'
 
-const { Paragraph } = Typography
+const {Title, Paragraph} = Typography
 
 const EventDetail: NextPage = () => {
   const router = useRouter()
@@ -17,9 +18,8 @@ const EventDetail: NextPage = () => {
   const {token} = useToken()
 
   if (!token) {
-    return <>
-      <Link href={'/login'}>login</Link>
-    </>
+    router.replace('/login')
+    return null
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -36,22 +36,26 @@ const EventDetail: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
-
       <Layout>
-        <Paragraph>
-          <h1>{data.data.name}</h1>
+        <Header />
 
-          <ul>
-            <li>{data.data.budget}</li>
-            <li>{data.data.start_at}</li>
-            <li>{data.data.end_at}</li>
-            <li>{data.data.max_size}</li>
-            <li>{data.data.location}</li>
-            <li>{data.data.description}</li>
-            <li>{data.data.organizer.name}</li>
-          </ul>
-        </Paragraph>
+        <Row>
+          <Col span={18} offset={3} className="">
+            <Title>{data.data.name}</Title>
+
+            <Paragraph>
+              <ul>
+                <li><MoneyCollectOutlined />{data.data.budget}</li>
+                <li><ClockCircleOutlined />{data.data.start_at} ～ {data.data.end_at}</li>
+                <li><UserOutlined />{data.data.max_size}</li>
+                <li><PushpinOutlined />{data.data.location}</li>
+                <li><BookOutlined />{data.data.description}</li>
+                <li><IdcardOutlined />{data.data.organizer.name}</li>
+              </ul>
+            </Paragraph>
+
+          </Col>
+        </Row>
       </Layout>
     </div>
   )

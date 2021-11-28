@@ -33,7 +33,6 @@ const Header = () => {
     )
   } else {
     return <PageHeader title="BeerKeeper" />
-
   }
 }
 
