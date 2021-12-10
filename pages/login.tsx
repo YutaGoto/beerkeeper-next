@@ -24,7 +24,7 @@ const Login = (): ReactElement => {
       password: values.password
     })
     axios.defaults.headers.common['content-type'] = 'application/json;charset=UTF-8';
-    axios.post('http://localhost:8000/users/login', body).then(res => {
+    axios.post(`${process.env.BASE_URL}/users/login`, body).then(res => {
       if (res.data.data.token) {
         setItem('token', res.data.data.token)
         router.replace('/')
