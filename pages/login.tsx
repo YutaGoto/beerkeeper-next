@@ -3,8 +3,8 @@ import { useRouter } from 'next/dist/client/router'
 import axios from 'axios'
 
 import useStorage from '../hook/useStorage'
-import React, { ReactElement, useState } from 'react'
-import { Form, Input, Button, Layout } from 'antd'
+import React, { ReactElement } from 'react'
+import { Form, Input, Button, Layout, notification } from 'antd'
 import Header from '../components/Header'
 
 const { Content } = Layout;
@@ -16,7 +16,7 @@ interface LoginInfo {
 
 const Login = (): ReactElement => {
   const {setItem} = useStorage()
-  const router = useRouter();
+  const router = useRouter()
 
   const onSubmit = (values: LoginInfo) => {
     const body = JSON.stringify({
@@ -28,10 +28,18 @@ const Login = (): ReactElement => {
       if (res.data.data.token) {
         setItem('token', res.data.data.token)
         router.replace('/')
-        return null
+        return
       } else {
-        return null
+        notification.warn({
+          message: 'エラーが発生しました。もう一度試してください'
+        })
+        return
       }
+    }).catch((err) => {
+      notification.error({
+        message: 'メールアドレスまたはパスワードが違います'
+      })
+      return
     })
   }
 
