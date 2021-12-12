@@ -19,6 +19,7 @@ const Header = () => {
       <PageHeader
         title="BeerKeeper"
         extra={[
+          <Button key="2" href='/events/new' type="primary">イベントを作る</Button>,
           <Button
             key="1"
             type="primary"
