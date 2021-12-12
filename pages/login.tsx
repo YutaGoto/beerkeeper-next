@@ -69,6 +69,7 @@ const Login = (): ReactElement => {
           <Form.Item
             label="email"
             name="email"
+            rules={[{ type: 'email' }]}
           >
             <Input />
           </Form.Item>
