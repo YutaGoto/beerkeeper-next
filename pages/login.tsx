@@ -41,7 +41,7 @@ const Login = (): ReactElement => {
         })
         return
       }
-    }).catch((err) => {
+    }).catch(() => {
       notification.error({
         message: 'メールアドレスまたはパスワードが違います'
       })
