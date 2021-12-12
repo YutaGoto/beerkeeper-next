@@ -38,7 +38,13 @@ const EventDetail: NextPage = () => {
       postBody,
       { headers: { Authorization: `Bearer ${token.token}` } },
     ).then(res => {
-      router.replace(`/events/${res.data.data.id}`)
+      router.push({
+        pathname: `/events/${res.data.data.id}`,
+        query: {
+          notificationType: 'success',
+          notificationMessage: 'イベントを作成しました',
+        }
+      })
       return
     }).catch((err) => {
       console.log(err)

@@ -3,7 +3,7 @@ import Head from 'next/head'
 import {Layout, Typography, Row, Col} from 'antd'
 
 import { useToken } from '../hook/useToken'
-import { useRouter } from 'next/dist/client/router'
+import { useRouter } from 'next/router'
 
 import Header from '../components/Header'
 import useSWR from 'swr'
