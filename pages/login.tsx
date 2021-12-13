@@ -27,7 +27,13 @@ const Login = (): ReactElement => {
     axios.post(`${process.env.BASE_URL}/users/login`, body).then(res => {
       if (res.data.data.token) {
         setItem('token', res.data.data.token)
-        router.replace('/')
+        router.push({
+          pathname: '/',
+          query: {
+            notificationType: 'success',
+            notificationMessage: 'ログインに成功しました',
+          }
+        })
         return
       } else {
         notification.warn({
@@ -35,7 +41,7 @@ const Login = (): ReactElement => {
         })
         return
       }
-    }).catch((err) => {
+    }).catch(() => {
       notification.error({
         message: 'メールアドレスまたはパスワードが違います'
       })
@@ -63,6 +69,7 @@ const Login = (): ReactElement => {
           <Form.Item
             label="email"
             name="email"
+            rules={[{ type: 'email' }]}
           >
             <Input />
           </Form.Item>
