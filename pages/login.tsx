@@ -58,7 +58,7 @@ const Login = (): ReactElement => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Content>
+      <Content className='main-content'>
         <Form
           name="basic"
           labelCol={{ span: 8 }}

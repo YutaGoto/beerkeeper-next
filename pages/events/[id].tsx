@@ -12,6 +12,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 const {Title, Paragraph} = Typography
+const {Content} = Layout
 
 const EventDetail: NextPage = () => {
   const router = useRouter()
@@ -86,31 +87,33 @@ const EventDetail: NextPage = () => {
       <Layout>
         <Header />
 
-        <Row>
-          <Col span={18} offset={3} className="">
-            <Title>{data.data.name}</Title>
+        <Content className='main-content'>
+          <Row>
+            <Col span={18} offset={3} className="">
+              <Title>{data.data.name}</Title>
 
-            <Paragraph>
-              <ul>
-                <li><MoneyCollectOutlined />{data.data.budget}</li>
-                <li><ClockCircleOutlined />{data.data.start_at} ～ {data.data.end_at}</li>
-                <li><UserOutlined />{data.data.max_size}</li>
-                <li><PushpinOutlined />{data.data.location}</li>
-                <li><BookOutlined />{data.data.description}</li>
-                <li><IdcardOutlined />{data.data.organizer.name}</li>
-              </ul>
-            </Paragraph>
+              <Paragraph>
+                <ul>
+                  <li><MoneyCollectOutlined />{data.data.budget}</li>
+                  <li><ClockCircleOutlined />{data.data.start_at} ～ {data.data.end_at}</li>
+                  <li><UserOutlined />{data.data.max_size}</li>
+                  <li><PushpinOutlined />{data.data.location}</li>
+                  <li><BookOutlined />{data.data.description}</li>
+                  <li><IdcardOutlined />{data.data.organizer.name}</li>
+                </ul>
+              </Paragraph>
 
-            <Paragraph>
-              {isParticipant ? <>
-                <Button danger type="primary" loading={btnLoading} onClick={() => deleteParticipation()}>参加登録解除する</Button>
-              </> : <>
-                <Button type="primary" loading={btnLoading} onClick={() => submitParticipation()}>参加登録する</Button>
-              </>}
-            </Paragraph>
+              <Paragraph>
+                {isParticipant ? <>
+                  <Button danger type="primary" loading={btnLoading} onClick={() => deleteParticipation()}>参加登録解除する</Button>
+                </> : <>
+                  <Button type="primary" loading={btnLoading} onClick={() => submitParticipation()}>参加登録する</Button>
+                </>}
+              </Paragraph>
 
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </Content>
       </Layout>
     </div>
   )

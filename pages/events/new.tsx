@@ -11,6 +11,7 @@ import React from 'react'
 
 const {Title} = Typography
 const { RangePicker } = DatePicker;
+const {Content} = Layout
 
 const EventDetail: NextPage = () => {
   const router = useRouter()
@@ -63,39 +64,41 @@ const EventDetail: NextPage = () => {
       <Layout>
         <Header />
 
-        <Row>
-          <Col span={18} offset={3} className="">
-            <Title>新規イベント作成</Title>
+        <Content className='main-content'>
+          <Row>
+            <Col span={18} offset={3} className="">
+              <Title>新規イベント作成</Title>
 
-            <Form onFinish={onFinish}>
-              <Form.Item name='name' label='name' rules={[{ required: true }]} >
-                <Input />
-              </Form.Item>
-              <Form.Item name='budget' label='budget' rules={[{ required: true }]} >
-                <Input />
-              </Form.Item>
-              <Form.Item name='date' label='date' rules={[{ required: true }]} >
-                <RangePicker showTime />
-              </Form.Item>
-              <Form.Item name='max_size' label='max_size' rules={[{ required: true, type: 'number', min: 1, max: 10000 }]} >
-                <InputNumber />
-              </Form.Item>
-              <Form.Item name='location' label='location' rules={[{ required: true }]} >
-                <Input />
-              </Form.Item>
-              <Form.Item name='description' label='description' rules={[{ required: true }]} >
-                <Input.TextArea />
-              </Form.Item>
+              <Form onFinish={onFinish}>
+                <Form.Item name='name' label='name' rules={[{ required: true }]} >
+                  <Input />
+                </Form.Item>
+                <Form.Item name='budget' label='budget' rules={[{ required: true }]} >
+                  <Input />
+                </Form.Item>
+                <Form.Item name='date' label='date' rules={[{ required: true }]} >
+                  <RangePicker showTime />
+                </Form.Item>
+                <Form.Item name='max_size' label='max_size' rules={[{ required: true, type: 'number', min: 1, max: 10000 }]} >
+                  <InputNumber />
+                </Form.Item>
+                <Form.Item name='location' label='location' rules={[{ required: true }]} >
+                  <Input />
+                </Form.Item>
+                <Form.Item name='description' label='description' rules={[{ required: true }]} >
+                  <Input.TextArea />
+                </Form.Item>
 
-              <Form.Item>
-                <Button type="primary" htmlType='submit'>
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
+                <Form.Item>
+                  <Button type="primary" htmlType='submit'>
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
 
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </Content>
       </Layout>
     </div>
   )

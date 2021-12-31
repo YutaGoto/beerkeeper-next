@@ -23,6 +23,8 @@ const Home: NextPage = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const {data} = useSWR([`/users/profile`, token.token], fetcher)
 
+  const {Content} = Layout
+
   return (
     <div>
       <Head>
@@ -34,12 +36,14 @@ const Home: NextPage = () => {
       <Layout>
         <Header />
 
-        <Row>
-          <Col span={18} offset={3} className="">
-            <Title>Welcome BeerKeeper</Title>
-            {data && <Title level={2}>Hello, {data.data.name}</Title> }
-          </Col>
-        </Row>
+        <Content className='main-content'>
+          <Row>
+            <Col span={18} offset={3} className="">
+              <Title>Welcome BeerKeeper</Title>
+              {data && <Title level={2}>Hello, {data.data.name}</Title> }
+            </Col>
+          </Row>
+        </Content>
       </Layout>
     </div>
   )
