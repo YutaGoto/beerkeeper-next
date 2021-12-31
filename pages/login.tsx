@@ -27,6 +27,7 @@ const Login = (): ReactElement => {
     axios.post(`${process.env.BASE_URL}/users/login`, body).then(res => {
       if (res.data.data.token) {
         setItem('token', res.data.data.token)
+        setItem('id', res.data.data.id)
         router.push({
           pathname: '/',
           query: {

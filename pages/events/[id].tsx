@@ -2,18 +2,20 @@ import type { NextPage } from 'next'
 import useSWR from 'swr'
 import Head from 'next/head'
 import { useRouter } from 'next/dist/client/router'
-import {Layout, Typography, Row, Col} from 'antd'
+import {Layout, Typography, Row, Col, Button, notification} from 'antd'
 import { BookOutlined, ClockCircleOutlined, IdcardOutlined, MoneyCollectOutlined, PushpinOutlined, UserOutlined } from '@ant-design/icons';
 
 import fetcher from '../../lib/fetcher'
 import { useToken } from '../../hook/useToken'
 import Header from '../../components/Header'
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 const {Title, Paragraph} = Typography
 
 const EventDetail: NextPage = () => {
   const router = useRouter()
+  const [btnLoading, setBtnLoading] = useState<boolean>(false)
   const { id } = router.query
   const {token} = useToken()
 
@@ -27,6 +29,51 @@ const EventDetail: NextPage = () => {
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
+
+  const isParticipant = !!data.data.participations.find((participation) => participation.user === token.id)
+
+  const submitParticipation = () => {
+    setBtnLoading(true)
+    axios.defaults.headers.common['content-type'] = 'application/json;charset=UTF-8';
+    axios.post(
+      `${process.env.BASE_URL}/events/${id}/participant`,
+      {},
+      { headers: { Authorization: `Bearer ${token.token}` } }
+    ).then(() => {
+      setBtnLoading(false)
+      notification.success({
+        message: '参加登録しました'
+      })
+      return
+    }).catch((err) => {
+      setBtnLoading(false)
+      notification.warn({
+        message: `エラーが発生しました。もう一度試してください。${err.message}`
+      })
+      return
+    })
+  }
+
+  const deleteParticipation = () => {
+    setBtnLoading(true)
+    axios.defaults.headers.common['content-type'] = 'application/json;charset=UTF-8';
+    axios.delete(
+      `${process.env.BASE_URL}/events/${id}/participant`,
+      { headers: { Authorization: `Bearer ${token.token}` } }
+    ).then(() => {
+      setBtnLoading(false)
+      notification.success({
+        message: '参加登録解除しました'
+      })
+      return
+    }).catch((err) => {
+      setBtnLoading(false)
+      notification.warn({
+        message: `エラーが発生しました。もう一度試してください。 ${err.message}`
+      })
+      return
+    })
+  }
 
   return (
     <div>
@@ -52,6 +99,14 @@ const EventDetail: NextPage = () => {
                 <li><BookOutlined />{data.data.description}</li>
                 <li><IdcardOutlined />{data.data.organizer.name}</li>
               </ul>
+            </Paragraph>
+
+            <Paragraph>
+              {isParticipant ? <>
+                <Button danger type="primary" loading={btnLoading} onClick={() => deleteParticipation()}>参加登録解除する</Button>
+              </> : <>
+                <Button type="primary" loading={btnLoading} onClick={() => submitParticipation()}>参加登録する</Button>
+              </>}
             </Paragraph>
 
           </Col>
