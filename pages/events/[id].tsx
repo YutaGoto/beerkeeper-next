@@ -1,15 +1,17 @@
 import type { NextPage } from 'next'
 import useSWR from 'swr'
 import Head from 'next/head'
-import { useRouter } from 'next/dist/client/router'
+import React, { useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 import {Layout, Typography, Row, Col, Button, notification} from 'antd'
 import { BookOutlined, ClockCircleOutlined, IdcardOutlined, MoneyCollectOutlined, PushpinOutlined, UserOutlined } from '@ant-design/icons';
 
 import fetcher from '../../lib/fetcher'
-import { useToken } from '../../hook/useToken'
 import Header from '../../components/Header'
-import React, { useState } from 'react'
-import axios from 'axios'
+
+import { Event } from '../../types'
+import useUser from '../../data/set-user'
 
 const {Title, Paragraph} = Typography
 const {Content} = Layout
@@ -18,20 +20,19 @@ const EventDetail: NextPage = () => {
   const router = useRouter()
   const [btnLoading, setBtnLoading] = useState<boolean>(false)
   const { id } = router.query
-  const {token} = useToken()
+  const {loggedOut, token, userId} = useUser()
 
-  if (!token) {
+  if (loggedOut) {
     router.replace('/login')
-    return null
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const {data, error} = useSWR([`/events/${id}`, token.token], fetcher)
+  const {data, error} = useSWR([`/events/${id}`, token], fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
-  const isParticipant = !!data.data.participations.find((participation) => participation.user === token.id)
+  const resData = data.data as Event
+  const isParticipant = !!resData.participations.find((participation) => participation.user === userId)
 
   const submitParticipation = () => {
     setBtnLoading(true)
@@ -39,7 +40,7 @@ const EventDetail: NextPage = () => {
     axios.post(
       `${process.env.BASE_URL}/events/${id}/participant`,
       {},
-      { headers: { Authorization: `Bearer ${token.token}` } }
+      { headers: { Authorization: `Bearer ${token}` } }
     ).then(() => {
       setBtnLoading(false)
       notification.success({
@@ -60,7 +61,7 @@ const EventDetail: NextPage = () => {
     axios.defaults.headers.common['content-type'] = 'application/json;charset=UTF-8';
     axios.delete(
       `${process.env.BASE_URL}/events/${id}/participant`,
-      { headers: { Authorization: `Bearer ${token.token}` } }
+      { headers: { Authorization: `Bearer ${token}` } }
     ).then(() => {
       setBtnLoading(false)
       notification.success({
@@ -90,16 +91,16 @@ const EventDetail: NextPage = () => {
         <Content className='main-content'>
           <Row>
             <Col span={18} offset={3} className="">
-              <Title>{data.data.name}</Title>
+              <Title>{resData.name}</Title>
 
               <Paragraph>
                 <ul>
-                  <li><MoneyCollectOutlined />{data.data.budget}</li>
-                  <li><ClockCircleOutlined />{data.data.start_at} ～ {data.data.end_at}</li>
-                  <li><UserOutlined />{data.data.max_size}</li>
-                  <li><PushpinOutlined />{data.data.location}</li>
-                  <li><BookOutlined />{data.data.description}</li>
-                  <li><IdcardOutlined />{data.data.organizer.name}</li>
+                  <li><MoneyCollectOutlined />{resData.budget}</li>
+                  <li><ClockCircleOutlined />{resData.start_at} ～ {resData.end_at}</li>
+                  <li><UserOutlined />{resData.max_size}</li>
+                  <li><PushpinOutlined />{resData.location}</li>
+                  <li><BookOutlined />{resData.description}</li>
+                  <li><IdcardOutlined />{resData.organizer.name}</li>
                 </ul>
               </Paragraph>
 
