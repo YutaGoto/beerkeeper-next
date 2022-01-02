@@ -2,12 +2,12 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/dist/client/router'
 import axios from 'axios'
-import {Layout, Typography, Row, Col, Form, Input, InputNumber, DatePicker, Button} from 'antd'
+import {Layout, Typography, Row, Col, Form, Input, InputNumber, DatePicker, Button, notification} from 'antd'
 
 import {dateToString} from '../../utils/DateString'
-import { useToken } from '../../hook/useToken'
 import Header from '../../components/Header'
 import React from 'react'
+import useUser from '../../data/set-user'
 
 const {Title} = Typography
 const { RangePicker } = DatePicker;
@@ -15,9 +15,9 @@ const {Content} = Layout
 
 const EventDetail: NextPage = () => {
   const router = useRouter()
-  const {token} = useToken()
+  const { loggedOut, token } = useUser()
 
-  if (!token) {
+  if (loggedOut) {
     router.replace('/login')
     return null
   }
@@ -37,7 +37,7 @@ const EventDetail: NextPage = () => {
     axios.post(
       `${process.env.BASE_URL}/events`,
       postBody,
-      { headers: { Authorization: `Bearer ${token.token}` } },
+      { headers: { Authorization: `Bearer ${token}` } },
     ).then(res => {
       router.push({
         pathname: `/events/${res.data.data.id}`,
@@ -49,6 +49,9 @@ const EventDetail: NextPage = () => {
       return
     }).catch((err) => {
       console.log(err)
+      notification.warn({
+        message: `エラーが発生しました。もう一度試してください。${err.message}`
+      })
       return
     })
   }
