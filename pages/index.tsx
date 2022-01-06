@@ -14,14 +14,12 @@ const {Title} = Typography
 const Home: NextPage = () => {
   const {loggedOut, token} = useUser()
   const router = useRouter()
+  const {data} = useSWR<any>([`/users/profile`, token], fetcher)
 
   if (loggedOut) {
     router.replace('/login')
     return null
   }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const {data} = useSWR([`/users/profile`, token], fetcher)
 
   const {Content} = Layout
 
@@ -43,6 +41,29 @@ const Home: NextPage = () => {
               {data && <Title level={2}>Hello, {data.data.name}</Title> }
             </Col>
           </Row>
+
+          <Row>
+            <Col span={18} offset={3} className="">
+              <Title>主催中イベント</Title>
+              {data && data.data.organizer_list.map(organizer_event => (
+                <>
+                  <Title level={2}>{organizer_event.name}</Title>
+                </>
+              )) }
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={18} offset={3} className="">
+              <Title>参加イベント</Title>
+              {data && data.data.events.map(event => (
+                <>
+                  <Title level={2}>{event.name}</Title>
+                </>
+              )) }
+            </Col>
+          </Row>
+
         </Content>
       </Layout>
     </div>
