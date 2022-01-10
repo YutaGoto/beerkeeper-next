@@ -32,7 +32,7 @@ const EventDetail: NextPage = () => {
   if (!data) return <div>loading...</div>
 
   const resData = data.data as Event
-  const isParticipant = !!resData.participations.find((participation) => participation.user === userId)
+  const isParticipant = !!resData.participations.find((participation) => participation.user_id === userId)
 
   const submitParticipation = () => {
     setBtnLoading(true)
