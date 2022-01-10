@@ -51,9 +51,7 @@ const Home: NextPage = () => {
             <Col span={18} offset={3} className="">
               <Title>主催中イベント</Title>
               {data && data.data.organizer_events.map(organizer_event => (
-                <>
-                  <Title level={2}>{organizer_event.name}</Title>
-                </>
+                <Title key={organizer_event.id} level={2}>{organizer_event.name}</Title>
               )) }
             </Col>
           </Row>
@@ -62,9 +60,7 @@ const Home: NextPage = () => {
             <Col span={18} offset={3} className="">
               <Title>参加イベント</Title>
               {data && data.data.events.map(event => (
-                <>
-                  <Title level={2}>{event.name}</Title>
-                </>
+                <Title key={event.id} level={2}>{event.name}</Title>
               )) }
             </Col>
           </Row>
