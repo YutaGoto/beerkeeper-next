@@ -1,11 +1,12 @@
 import Head from 'next/head'
-import { useRouter } from 'next/dist/client/router'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 
 import useStorage from '../hook/useStorage'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useContext } from 'react'
 import { Form, Input, Button, Layout, notification } from 'antd'
 import Header from '../components/Header'
+import { NotificationContext } from '../contexts/NotificationContext'
 
 const { Content } = Layout;
 
@@ -15,6 +16,7 @@ interface LoginInfo {
 }
 
 const Login = (): ReactElement => {
+  const {setNotification} = useContext(NotificationContext)
   const {setItem} = useStorage()
   const router = useRouter()
 
@@ -28,12 +30,12 @@ const Login = (): ReactElement => {
       if (res.data.data.token) {
         setItem('token', res.data.data.token)
         setItem('id', res.data.data.id)
+        setNotification({
+          type: 'success',
+          body: 'ログインに成功しました'
+        })
         router.push({
-          pathname: '/',
-          query: {
-            notificationType: 'success',
-            notificationMessage: 'ログインに成功しました',
-          }
+          pathname: '/'
         })
         return
       } else {

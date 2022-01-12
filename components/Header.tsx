@@ -1,35 +1,26 @@
-import { Button, PageHeader, notification } from 'antd';
+import { Button, PageHeader } from 'antd';
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
+import { NotificationContext } from '../contexts/NotificationContext';
 import useStorage from "../hook/useStorage";
 import { useToken } from "../hook/useToken";
 
-type NotificationType = 'success' | 'info' | 'warning' | 'error'
 
 const Header = () => {
+  const {setNotification} = useContext(NotificationContext)
   const {removeItem} = useStorage()
   const {token} = useToken()
   const router = useRouter()
 
-  useEffect(() => {
-    if (router.query.notificationMessage) {
-      const type: NotificationType = router.query.notificationType as NotificationType || 'info'
-      const message: string = router.query.notificationMessage as string
-
-      notification[type]({
-        message: message
-      })
-    }
-  }, [router.query.notificationMessage, router.query.notificationType])
-
   const handleLogout = () => {
     removeItem('token')
+    setNotification({
+      type: 'success',
+      body: 'ログアウトしました'
+    })
+
     router.push({
-      pathname: '/login',
-      query: {
-        notificationType: 'success',
-        notificationMessage: 'ログアウトしました',
-      }
+      pathname: '/login'
     })
   }
 
