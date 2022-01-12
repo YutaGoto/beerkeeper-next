@@ -1,8 +1,8 @@
 import { useToken } from "../hook/useToken";
 
 export default function useUser() {
-  const token = useToken()
-  const loggedOut: boolean = !token
+  const token = useToken();
+  const loggedOut: boolean = !token;
 
   return {
     loggedOut,

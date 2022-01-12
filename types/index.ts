@@ -1,5 +1,5 @@
-import { Event } from './event'
-import { User } from './user'
-import { Participation } from './participation'
+import { Event } from "./event";
+import { User } from "./user";
+import { Participation } from "./participation";
 
-export type {Event, User, Participation}
+export type { Event, User, Participation };
