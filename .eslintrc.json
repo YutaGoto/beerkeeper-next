@@ -14,8 +14,6 @@
     "@next/next/no-page-custom-font": "off",
     "semi": "error",
     "import/prefer-default-export": "off",
-    "newline-before-return": "error",
-    "no-console": "warn",
     "no-var": "error"
   }
 }
