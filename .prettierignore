@@ -1,0 +1,6 @@
+.next
+.github
+.circleci
+
+package.json
+yarn.lock
