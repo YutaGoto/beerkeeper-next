@@ -1,59 +1,45 @@
-import { Button, PageHeader, notification } from 'antd';
+import { Button, PageHeader } from "antd";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
+import { NotificationContext } from "../contexts/NotificationContext";
 import useStorage from "../hook/useStorage";
 import { useToken } from "../hook/useToken";
 
-type NotificationType = 'success' | 'info' | 'warning' | 'error'
-
 const Header = () => {
-  const {removeItem} = useStorage()
-  const {token} = useToken()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (router.query.notificationMessage) {
-      const type: NotificationType = router.query.notificationType as NotificationType || 'info'
-      const message: string = router.query.notificationMessage as string
-
-      notification[type]({
-        message: message
-      })
-    }
-  }, [router.query.notificationMessage, router.query.notificationType])
+  const { setNotification } = useContext(NotificationContext);
+  const { removeItem } = useStorage();
+  const { token } = useToken();
+  const router = useRouter();
 
   const handleLogout = () => {
-    removeItem('token')
+    removeItem("token");
+    setNotification({
+      type: "success",
+      body: "ログアウトしました",
+    });
+
     router.push({
-      pathname: '/login',
-      query: {
-        notificationType: 'success',
-        notificationMessage: 'ログアウトしました',
-      }
-    })
-  }
+      pathname: "/login",
+    });
+  };
 
   if (token) {
     return (
       <PageHeader
         title="BeerKeeper"
         extra={[
-          <Button key="2" href='/events/new' type="primary">イベントを作る</Button>,
-          <Button
-            key="1"
-            type="primary"
-            danger
-            onClick={handleLogout}
-          >
+          <Button key="2" href="/events/new" type="primary">
+            イベントを作る
+          </Button>,
+          <Button key="1" type="primary" danger onClick={handleLogout}>
             Log Out
           </Button>,
         ]}
-      >
-      </PageHeader>
-    )
+      ></PageHeader>
+    );
   } else {
-    return <PageHeader title="BeerKeeper" />
+    return <PageHeader title="BeerKeeper" />;
   }
-}
+};
 
-export default Header
+export default Header;

@@ -2,9 +2,9 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    BASE_URL: process.env.BASE_URL
+    BASE_URL: process.env.BASE_URL,
   },
   eslint: {
-    dirs: ['components/', 'lib/', 'pages/', 'utils/']
+    dirs: ["components/", "lib/", "pages/", "utils/"],
   },
-}
+};

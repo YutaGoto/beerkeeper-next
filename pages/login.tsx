@@ -1,54 +1,60 @@
-import Head from 'next/head'
-import { useRouter } from 'next/dist/client/router'
-import axios from 'axios'
+import Head from "next/head";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-import useStorage from '../hook/useStorage'
-import React, { ReactElement } from 'react'
-import { Form, Input, Button, Layout, notification } from 'antd'
-import Header from '../components/Header'
+import useStorage from "../hook/useStorage";
+import React, { ReactElement, useContext } from "react";
+import { Form, Input, Button, Layout, notification } from "antd";
+import Header from "../components/Header";
+import { NotificationContext } from "../contexts/NotificationContext";
 
 const { Content } = Layout;
 
 interface LoginInfo {
-  email?: string
-  password?: string
+  email?: string;
+  password?: string;
 }
 
 const Login = (): ReactElement => {
-  const {setItem} = useStorage()
-  const router = useRouter()
+  const { setNotification } = useContext(NotificationContext);
+  const { setItem } = useStorage();
+  const router = useRouter();
 
   const onSubmit = (values: LoginInfo) => {
     const body = JSON.stringify({
       email: values.email,
-      password: values.password
-    })
-    axios.defaults.headers.common['content-type'] = 'application/json;charset=UTF-8';
-    axios.post(`${process.env.BASE_URL}/users/login`, body).then(res => {
-      if (res.data.data.token) {
-        setItem('token', res.data.data.token)
-        setItem('id', res.data.data.id)
-        router.push({
-          pathname: '/',
-          query: {
-            notificationType: 'success',
-            notificationMessage: 'ログインに成功しました',
-          }
-        })
-        return
-      } else {
-        notification.warn({
-          message: 'エラーが発生しました。もう一度試してください'
-        })
-        return
-      }
-    }).catch(() => {
-      notification.error({
-        message: 'メールアドレスまたはパスワードが違います'
+      password: values.password,
+    });
+    axios.defaults.headers.common["content-type"] =
+      "application/json;charset=UTF-8";
+    axios
+      .post(`${process.env.BASE_URL}/users/login`, body)
+      .then((res) => {
+        if (res.data.data.token) {
+          setItem("token", res.data.data.token);
+          setItem("id", res.data.data.id);
+          setNotification({
+            type: "success",
+            body: "ログインに成功しました",
+          });
+          router.push({
+            pathname: "/",
+          });
+          return;
+        } else {
+          notification.warn({
+            message: "エラーが発生しました。もう一度試してください",
+          });
+          return;
+        }
       })
-      return
-    })
-  }
+      .catch(() => {
+        notification.error({
+          message: "メールアドレスまたはパスワードが違います",
+        });
+        return;
+      });
+  };
 
   return (
     <div>
@@ -58,7 +64,7 @@ const Login = (): ReactElement => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Content className='main-content'>
+      <Content className="main-content">
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -67,33 +73,23 @@ const Login = (): ReactElement => {
           onFinish={onSubmit}
           autoComplete="off"
         >
-          <Form.Item
-            label="email"
-            name="email"
-            rules={[{ type: 'email' }]}
-          >
+          <Form.Item label="email" name="email" rules={[{ type: "email" }]}>
             <Input />
           </Form.Item>
 
-          <Form.Item
-            label="password"
-            name="password"
-          >
+          <Form.Item label="password" name="password">
             <Input.Password />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button
-              type="primary"
-              htmlType="submit"
-            >
+            <Button type="primary" htmlType="submit">
               Login
             </Button>
           </Form.Item>
         </Form>
       </Content>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
