@@ -3,10 +3,11 @@ import { useRouter } from "next/router";
 import axios from "axios";
 
 import useStorage from "../hook/useStorage";
-import React, { ReactElement, useContext } from "react";
-import { Form, Input, Button, Layout, notification } from "antd";
+import React, { useContext, useEffect } from "react";
+import { Form, Input, Button, Layout } from "antd";
 import Header from "../components/Header";
 import { NotificationContext } from "../contexts/NotificationContext";
+import { NextPage } from "next";
 
 const { Content } = Layout;
 
@@ -15,10 +16,19 @@ interface LoginInfo {
   password?: string;
 }
 
-const Login = (): ReactElement => {
+const Login: NextPage = () => {
   const { setNotification } = useContext(NotificationContext);
   const { setItem } = useStorage();
   const router = useRouter();
+
+  useEffect((): void => {
+    if (router.query?.message === "true"){
+      setNotification({
+        type: "warning",
+        body: "ログインしてください",
+      });
+    }
+  }, [router.query?.message, setNotification]);
 
   const onSubmit = (values: LoginInfo) => {
     const body = JSON.stringify({
@@ -42,15 +52,17 @@ const Login = (): ReactElement => {
           });
           return;
         } else {
-          notification.warn({
-            message: "エラーが発生しました。もう一度試してください",
+          setNotification({
+            type: 'error',
+            body: "エラーが発生しました。もう一度試してください"
           });
           return;
         }
       })
       .catch(() => {
-        notification.error({
-          message: "メールアドレスまたはパスワードが違います",
+        setNotification({
+          type: "error",
+          body: "メールアドレスまたはパスワードが違います",
         });
         return;
       });
