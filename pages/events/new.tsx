@@ -1,7 +1,7 @@
+import React from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/dist/client/router";
-import axios from "axios";
 import {
   Layout,
   Typography,
@@ -17,8 +17,8 @@ import {
 
 import { dateToString } from "../../utils/DateString";
 import Header from "../../components/Header";
-import React from "react";
 import useUser from "../../data/set-user";
+import { axios } from "../../lib/axios";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -44,8 +44,6 @@ const EventDetail: NextPage = () => {
       description: values.description,
     };
 
-    axios.defaults.headers.common["content-type"] =
-      "application/json;charset=UTF-8";
     axios
       .post(`${process.env.BASE_URL}/events`, postBody, {
         headers: { Authorization: `Bearer ${token}` },

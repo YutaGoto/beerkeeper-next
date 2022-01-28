@@ -16,7 +16,6 @@ import {
 
 import fetcher from "../../lib/fetcher";
 import Header from "../../components/Header";
-
 import { Event } from "../../types";
 import useUser from "../../data/set-user";
 

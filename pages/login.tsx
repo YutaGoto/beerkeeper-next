@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 import useStorage from "../hook/useStorage";
 import React, { useContext, useEffect } from "react";
@@ -8,6 +7,7 @@ import { Form, Input, Button, Layout } from "antd";
 import Header from "../components/Header";
 import { NotificationContext } from "../contexts/NotificationContext";
 import { NextPage } from "next";
+import { axios } from "../lib/axios";
 
 const { Content } = Layout;
 
@@ -22,7 +22,7 @@ const Login: NextPage = () => {
   const router = useRouter();
 
   useEffect((): void => {
-    if (router.query?.message === "true"){
+    if (router.query?.message === "true") {
       setNotification({
         type: "warning",
         body: "ログインしてください",
@@ -35,8 +35,6 @@ const Login: NextPage = () => {
       email: values.email,
       password: values.password,
     });
-    axios.defaults.headers.common["content-type"] =
-      "application/json;charset=UTF-8";
     axios
       .post(`${process.env.BASE_URL}/users/login`, body)
       .then((res) => {
@@ -53,8 +51,8 @@ const Login: NextPage = () => {
           return;
         } else {
           setNotification({
-            type: 'error',
-            body: "エラーが発生しました。もう一度試してください"
+            type: "error",
+            body: "エラーが発生しました。もう一度試してください",
           });
           return;
         }
