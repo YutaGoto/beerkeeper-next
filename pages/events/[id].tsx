@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import useSWR from "swr";
 import Head from "next/head";
 import React, { useState } from "react";
-import axios from "axios";
+import { axios } from "../../lib/axios";
 import { useRouter } from "next/router";
 import { Layout, Typography, Row, Col, Button, notification } from "antd";
 import {
@@ -37,19 +37,17 @@ const EventDetail: NextPage = () => {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  const resData = data.data as Event;
-  const isParticipant = !!resData.participations.find(
+  const event = data.event as Event;
+  const participation = event.participations.find(
     (participation) => participation.user_id === userId
   );
 
   const submitParticipation = () => {
     setBtnLoading(true);
-    axios.defaults.headers.common["content-type"] =
-      "application/json;charset=UTF-8";
     axios
       .post(
-        `${process.env.BASE_URL}/events/${id}/participant`,
-        {},
+        "/participations",
+        {event_id: event.id},
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then(() => {
@@ -70,12 +68,15 @@ const EventDetail: NextPage = () => {
 
   const deleteParticipation = () => {
     setBtnLoading(true);
-    axios.defaults.headers.common["content-type"] =
-      "application/json;charset=UTF-8";
     axios
-      .delete(`${process.env.BASE_URL}/events/${id}/participant`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .delete(
+        `/participations/${participation?.id}`,
+        {
+          params: {
+            event_id: event.id,
+          },
+          headers: { Authorization: `Bearer ${token}` },
+        })
       .then(() => {
         setBtnLoading(false);
         notification.success({
@@ -106,39 +107,39 @@ const EventDetail: NextPage = () => {
         <Content className="main-content">
           <Row>
             <Col span={18} offset={3} className="">
-              <Title>{resData.name}</Title>
+              <Title>{event.name}</Title>
 
               <Paragraph>
                 <ul>
                   <li>
                     <MoneyCollectOutlined />
-                    {resData.budget}
+                    {event.budget}
                   </li>
                   <li>
                     <ClockCircleOutlined />
-                    {resData.start_at} ～ {resData.end_at}
+                    {event.start_at} ～ {event.end_at}
                   </li>
                   <li>
                     <UserOutlined />
-                    {resData.max_size}
+                    {event.max_size}
                   </li>
                   <li>
                     <PushpinOutlined />
-                    {resData.location}
+                    {event.location}
                   </li>
                   <li>
                     <BookOutlined />
-                    {resData.description}
+                    {event.description}
                   </li>
                   <li>
                     <IdcardOutlined />
-                    {resData.organizer.name}
+                    {event.organizer.name}
                   </li>
                 </ul>
               </Paragraph>
 
               <Paragraph>
-                {isParticipant ? (
+                {participation ? (
                   <>
                     <Button
                       danger

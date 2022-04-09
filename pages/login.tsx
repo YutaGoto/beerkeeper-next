@@ -38,9 +38,9 @@ const Login: NextPage = () => {
     axios
       .post(`${process.env.BASE_URL}/users/login`, body)
       .then((res) => {
-        if (res.data.data.token) {
-          setItem("token", res.data.data.token);
-          setItem("id", res.data.data.id);
+        if (res.data.token) {
+          setItem("token", res.data.token);
+          setItem("id", res.data.user.id);
           setNotification({
             type: "success",
             body: "ログインに成功しました",

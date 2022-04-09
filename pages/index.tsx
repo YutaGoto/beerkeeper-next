@@ -11,7 +11,7 @@ import useUser from "../data/set-user";
 
 interface ResData {
   message: string;
-  data: UserProfile;
+  user: UserProfile;
 }
 
 const { Title } = Typography;
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
           <Row>
             <Col span={18} offset={3} className="">
               <Title>Welcome BeerKeeper</Title>
-              {data && <Title level={2}>Hello, {data.data.name}</Title>}
+              {data && <Title level={2}>Hello, {data.user.name}</Title>}
             </Col>
           </Row>
 
@@ -51,9 +51,9 @@ const Home: NextPage = () => {
             <Col span={18} offset={3} className="">
               <Title>主催中イベント</Title>
               {data &&
-                data.data.organizer_events.map((organizer_event) => (
-                  <Title key={organizer_event.id} level={2}>
-                    {organizer_event.name}
+                data.user.organizing_events.map((organizing_event) => (
+                  <Title key={organizing_event.id} level={2}>
+                    {organizing_event.name}
                   </Title>
                 ))}
             </Col>
@@ -63,7 +63,7 @@ const Home: NextPage = () => {
             <Col span={18} offset={3} className="">
               <Title>参加イベント</Title>
               {data &&
-                data.data.events.map((event) => (
+                data.user.events.map((event) => (
                   <Title key={event.id} level={2}>
                     {event.name}
                   </Title>
