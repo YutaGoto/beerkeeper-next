@@ -1,4 +1,3 @@
-import "antd/dist/antd.css";
 import "../styles/globals.css";
 import "../styles/antd-custom.css";
 import { useEffect, useState } from "react";
@@ -7,7 +6,8 @@ import {
   NotificationContext,
   SetNotificationType,
 } from "../contexts/NotificationContext";
-import { Layout, notification } from "antd";
+import { Layout, notification, ConfigProvider } from "antd";
+import enUS from 'antd/lib/locale/en_US';
 
 export default function App({
   Component,
@@ -25,12 +25,14 @@ export default function App({
   }, [notificationValue.body, notificationValue.type]);
 
   return (
-    <NotificationContext.Provider
-      value={{ type: "info", body: "", setNotification: setNotificationValue }}
-    >
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </NotificationContext.Provider>
+    <ConfigProvider locale={enUS}>
+      <NotificationContext.Provider
+        value={{ type: "info", body: "", setNotification: setNotificationValue }}
+      >
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </NotificationContext.Provider>
+    </ConfigProvider>
   );
 }
