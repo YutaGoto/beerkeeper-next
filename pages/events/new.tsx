@@ -45,16 +45,12 @@ const EventDetail: NextPage = () => {
     };
 
     axios
-      .post(`${process.env.BASE_URL}/events`, postBody, {
+      .post(`/events`, postBody, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         router.push({
-          pathname: `/events/${res.data.data.id}`,
-          query: {
-            notificationType: "success",
-            notificationMessage: "イベントを作成しました",
-          },
+          pathname: `/events/${res.data.event.id}`,
         });
         return;
       })

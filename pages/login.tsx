@@ -36,7 +36,7 @@ const Login: NextPage = () => {
       password: values.password,
     });
     axios
-      .post(`${process.env.BASE_URL}/users/login`, body)
+      .post(`/users/login`, body)
       .then((res) => {
         if (res.data.token) {
           setItem("token", res.data.token);
