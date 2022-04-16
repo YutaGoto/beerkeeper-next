@@ -7,7 +7,7 @@ import {
   SetNotificationType,
 } from "../contexts/NotificationContext";
 import { Layout, notification, ConfigProvider } from "antd";
-import enUS from 'antd/lib/locale/en_US';
+import enUS from "antd/lib/locale/en_US";
 
 export default function App({
   Component,
@@ -27,7 +27,11 @@ export default function App({
   return (
     <ConfigProvider locale={enUS}>
       <NotificationContext.Provider
-        value={{ type: "info", body: "", setNotification: setNotificationValue }}
+        value={{
+          type: "info",
+          body: "",
+          setNotification: setNotificationValue,
+        }}
       >
         <Layout>
           <Component {...pageProps} />
