@@ -47,7 +47,7 @@ const EventDetail: NextPage = () => {
     axios
       .post(
         "/participations",
-        {event_id: event.id},
+        { event_id: event.id },
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then(() => {
@@ -69,14 +69,12 @@ const EventDetail: NextPage = () => {
   const deleteParticipation = () => {
     setBtnLoading(true);
     axios
-      .delete(
-        `/participations/${participation?.id}`,
-        {
-          params: {
-            event_id: event.id,
-          },
-          headers: { Authorization: `Bearer ${token}` },
-        })
+      .delete(`/participations/${participation?.id}`, {
+        params: {
+          event_id: event.id,
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then(() => {
         setBtnLoading(false);
         notification.success({
