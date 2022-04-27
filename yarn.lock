@@ -501,9 +501,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"antd@npm:^4.20.0":
-  version: 4.20.0
-  resolution: "antd@npm:4.20.0"
+"antd@npm:^4.20.1":
+  version: 4.20.1
+  resolution: "antd@npm:4.20.1"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@ant-design/icons": ^4.7.0
@@ -552,7 +552,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: a3fe70ee45aa399b0866b51e9c540cc832193d7cdb9ce4f6465a0dd79cb9a387e3def30467ec55acf0ef8cf0078029b1e28c8fbdca5b447b7d805465a43879ab
+  checksum: 386cd6b0f59d0081e0953ac42380c9d91dd4d12f41a1e75355af8ef61df7bc2160ea7014932e40453336024c9587903e92ad23d903262296d4f25e1e5b65f7f3
   languageName: node
   linkType: hard
 
@@ -674,7 +674,7 @@ __metadata:
     "@types/node": 17.0.23
     "@types/react": 17.0.43
     "@typescript-eslint/eslint-plugin": ^5.20.0
-    antd: ^4.20.0
+    antd: ^4.20.1
     axios: ^0.26.1
     dayjs: ^1.11.1
     eslint: <9.0.0
