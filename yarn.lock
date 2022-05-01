@@ -501,9 +501,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"antd@npm:^4.20.0":
-  version: 4.20.0
-  resolution: "antd@npm:4.20.0"
+"antd@npm:^4.20.2":
+  version: 4.20.2
+  resolution: "antd@npm:4.20.2"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@ant-design/icons": ^4.7.0
@@ -534,7 +534,7 @@ __metadata:
     rc-progress: ~3.2.1
     rc-rate: ~2.9.0
     rc-resize-observer: ^1.2.0
-    rc-segmented: ~2.0.0
+    rc-segmented: "~2.1.0 "
     rc-select: ~14.1.1
     rc-slider: ~10.0.0
     rc-steps: ~4.1.0
@@ -552,7 +552,7 @@ __metadata:
   peerDependencies:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
-  checksum: a3fe70ee45aa399b0866b51e9c540cc832193d7cdb9ce4f6465a0dd79cb9a387e3def30467ec55acf0ef8cf0078029b1e28c8fbdca5b447b7d805465a43879ab
+  checksum: b85aee4e0d324fe4b8aa5ac139b81bb115ec9e9e9530283fdba4c9d7550bfa1caef326cc0ac6cad1144da6993d55c72f4a92a9b63bdcf254af98fc16e89e0d85
   languageName: node
   linkType: hard
 
@@ -674,7 +674,7 @@ __metadata:
     "@types/node": 17.0.23
     "@types/react": 17.0.43
     "@typescript-eslint/eslint-plugin": ^5.20.0
-    antd: ^4.20.0
+    antd: ^4.20.2
     axios: ^0.26.1
     dayjs: ^1.11.1
     eslint: <9.0.0
@@ -2577,9 +2577,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rc-segmented@npm:~2.0.0":
-  version: 2.0.0
-  resolution: "rc-segmented@npm:2.0.0"
+"rc-segmented@npm:~2.1.0 ":
+  version: 2.1.0
+  resolution: "rc-segmented@npm:2.1.0"
   dependencies:
     "@babel/runtime": ^7.11.1
     classnames: ^2.2.1
@@ -2588,7 +2588,7 @@ __metadata:
   peerDependencies:
     react: ">=16.0.0"
     react-dom: ">=16.0.0"
-  checksum: db625ec62b4247cdf08dafc72c74d8ecec954da0fc069954db23ca17e5217b1f162baea183b0f4cc8287b1af83e634259bd2ff47bbb0ca3c41b0787f5708c1a3
+  checksum: 4f61ba5da980ee2056dfc330c456710c3c76982a50aeee25210cda3172da6974ec013ac82db0fb307546b6f070482d770fe499093409eb8a966e878447e377d5
   languageName: node
   linkType: hard
 
