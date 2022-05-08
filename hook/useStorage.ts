@@ -1,35 +1,20 @@
-type StorageType = "session" | "local";
-
 type UseStorageReturnValue = {
-  getItem: (key: string, type?: StorageType) => string;
-  setItem: (key: string, value: string, type?: StorageType) => boolean;
-  removeItem: (key: string, type?: StorageType) => void;
+  getItem: (key: string) => string;
+  setItem: (key: string, value: string) => void;
+  removeItem: (key: string) => void;
 };
 
-const storageType = (type?: StorageType): "localStorage" | "sessionStorage" =>
-  `${type ?? "session"}Storage`;
-
 const useStorage = (): UseStorageReturnValue => {
-  const isBrowser: boolean = ((): boolean => typeof window !== "undefined")();
-
-  const getItem = (key: string, type?: StorageType): string => {
-    const storageType: "localStorage" | "sessionStorage" = `${
-      type ?? "session"
-    }Storage`;
-    return isBrowser ? window[storageType][key] : "";
+  const getItem = (key: string): string => {
+    return localStorage[key];
   };
 
-  const setItem = (key: string, value: string, type?: StorageType): boolean => {
-    if (isBrowser) {
-      window[storageType(type)].setItem(key, value);
-      return true;
-    }
-
-    return false;
+  const setItem = (key: string, value: string): void => {
+    localStorage.setItem(key, value);
   };
 
-  const removeItem = (key: string, type?: StorageType): void => {
-    window[storageType(type)].removeItem(key);
+  const removeItem = (key: string): void => {
+    localStorage.removeItem(key);
   };
 
   return {
