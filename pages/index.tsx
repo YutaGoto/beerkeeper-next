@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import useSWR from "swr";
@@ -76,4 +77,11 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+const DynamicHome = dynamic(
+  {
+    loader: async () => Home,
+  },
+  { ssr: false }
+);
+
+export default DynamicHome;
