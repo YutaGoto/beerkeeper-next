@@ -1,5 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/dist/client/router";
 import {
@@ -24,7 +25,7 @@ const { Title } = Typography;
 const { RangePicker } = DatePicker;
 const { Content } = Layout;
 
-const EventDetail: NextPage = () => {
+const NewEvent: NextPage = () => {
   const router = useRouter();
   const { loggedOut, token } = useUser();
 
@@ -139,4 +140,11 @@ const EventDetail: NextPage = () => {
   );
 };
 
-export default EventDetail;
+const DynamicNewEvent = dynamic(
+  {
+    loader: async () => NewEvent,
+  },
+  { ssr: false }
+);
+
+export default DynamicNewEvent;

@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import useSWR from "swr";
 import Head from "next/head";
 import React, { useState } from "react";
@@ -168,4 +169,11 @@ const EventDetail: NextPage = () => {
   );
 };
 
-export default EventDetail;
+const DynamicEventDetail = dynamic(
+  {
+    loader: async () => EventDetail,
+  },
+  { ssr: false }
+);
+
+export default DynamicEventDetail;
