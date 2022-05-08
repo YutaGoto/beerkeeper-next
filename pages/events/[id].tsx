@@ -5,11 +5,18 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { axios } from "../../lib/axios";
 import { useRouter } from "next/router";
-import { Layout, Typography, Row, Col, Button, notification } from "antd";
 import {
-  BookOutlined,
+  Layout,
+  Typography,
+  Row,
+  Col,
+  Button,
+  notification,
+  Descriptions,
+  Divider,
+} from "antd";
+import {
   ClockCircleOutlined,
-  IdcardOutlined,
   MoneyCollectOutlined,
   PushpinOutlined,
   UserOutlined,
@@ -105,62 +112,83 @@ const EventDetail: NextPage = () => {
 
         <Content className="main-content">
           <Row>
-            <Col span={18} offset={3} className="">
+            <Col md={{ span: 18, offset: 4 }} sm={{ span: 22, offset: 1 }}>
               <Title>{event.name}</Title>
+              <Title level={3}>主催: {event.organizer.name}</Title>
+              <Title level={5}>{event.start_at}</Title>
 
-              <Paragraph>
-                <ul>
-                  <li>
-                    <MoneyCollectOutlined />
-                    {event.budget}
-                  </li>
-                  <li>
-                    <ClockCircleOutlined />
-                    {event.start_at} ～ {event.end_at}
-                  </li>
-                  <li>
-                    <UserOutlined />
-                    {event.max_size}
-                  </li>
-                  <li>
-                    <PushpinOutlined />
-                    {event.location}
-                  </li>
-                  <li>
-                    <BookOutlined />
+              <Divider />
+              <Row>
+                <Col md={15} sm={24}>
+                  <Paragraph>
+                    <Title level={4}>詳細</Title>
                     {event.description}
-                  </li>
-                  <li>
-                    <IdcardOutlined />
-                    {event.organizer.name}
-                  </li>
-                </ul>
-              </Paragraph>
+                  </Paragraph>
 
-              <Paragraph>
-                {participation ? (
-                  <>
-                    <Button
-                      danger
-                      type="primary"
-                      loading={btnLoading}
-                      onClick={() => deleteParticipation()}
+                  {participation ? (
+                    <div className="mb-1">
+                      <Button
+                        danger
+                        type="primary"
+                        loading={btnLoading}
+                        onClick={() => deleteParticipation()}
+                      >
+                        参加登録解除する
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="mb-1">
+                      <Button
+                        type="primary"
+                        loading={btnLoading}
+                        onClick={() => submitParticipation()}
+                      >
+                        参加登録する
+                      </Button>
+                    </div>
+                  )}
+                </Col>
+                <Col lg={9} md={24}>
+                  <Descriptions column={1} bordered>
+                    <Descriptions.Item
+                      label={
+                        <>
+                          <MoneyCollectOutlined /> <span>料金</span>
+                        </>
+                      }
                     >
-                      参加登録解除する
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      type="primary"
-                      loading={btnLoading}
-                      onClick={() => submitParticipation()}
+                      {event.budget}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <>
+                          <ClockCircleOutlined /> <span>日時</span>
+                        </>
+                      }
                     >
-                      参加登録する
-                    </Button>
-                  </>
-                )}
-              </Paragraph>
+                      {event.start_at} ～ {event.end_at}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <>
+                          <UserOutlined /> <span>最大人数</span>
+                        </>
+                      }
+                    >
+                      {event.max_size}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <>
+                          <PushpinOutlined /> <span>場所</span>
+                        </>
+                      }
+                    >
+                      {event.location}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Content>
