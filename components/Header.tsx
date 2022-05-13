@@ -1,4 +1,4 @@
-import { Button, PageHeader } from "antd";
+import { Flex, Link, Stack, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { NotificationContext } from "../contexts/NotificationContext";
@@ -25,20 +25,48 @@ const Header = () => {
 
   if (token) {
     return (
-      <PageHeader
-        title="BeerKeeper"
-        extra={[
-          <Button key="2" href="/events/new" type="primary">
-            イベントを作る
-          </Button>,
-          <Button key="1" type="primary" danger onClick={handleLogout}>
-            Log Out
-          </Button>,
-        ]}
-      ></PageHeader>
+      <Flex
+        as="nav"
+        align="center"
+        justify="space-between"
+        wrap="wrap"
+        w="100%"
+        mb={8}
+        p={4}
+        bg="gray.800"
+        color={["white", "white", "primary.700", "primary.700"]}
+      >
+        <Stack
+          spacing={8}
+          align="center"
+          justify={["center", "space-between", "flex-end", "flex-end"]}
+          direction={["column", "row", "row", "row"]}
+          pt={[4, 4, 0, 0]}
+        >
+          <Link href="/events/new">
+            <Text display="block">イベントを作る</Text>
+          </Link>
+
+          <Link onClick={handleLogout}>
+            <Text display="block">ログアウト</Text>
+          </Link>
+        </Stack>
+      </Flex>
     );
   } else {
-    return <PageHeader title="BeerKeeper" />;
+    return (
+      <Flex
+        as="nav"
+        align="center"
+        justify="space-between"
+        wrap="wrap"
+        w="100%"
+        mb={8}
+        p={4}
+        bg="gray.800"
+        color={["white", "white", "primary.700", "primary.700"]}
+      ></Flex>
+    );
   }
 };
 

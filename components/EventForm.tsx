@@ -1,59 +1,83 @@
-import { Form, Input, InputNumber, Button } from "antd";
 import { NextComponentType, NextPageContext } from "next";
-import dayjs from "dayjs";
-
-import { Event } from "../types";
-import { DatePicker } from "./antd";
-
-const { RangePicker } = DatePicker;
+import { Event, EventFormType } from "../types";
+import { Button, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import { UseFormRegister } from "react-hook-form";
 
 interface EventFormProps {
   event?: Event;
   onFinish: (values: any) => void;
+  register: UseFormRegister<EventFormType>;
 }
 
 const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
   event,
   onFinish,
+  register,
 }) => {
   return (
-    <Form onFinish={onFinish}>
-      <Form.Item name="name" label="name" rules={[{ required: true }]}>
-        <Input defaultValue={event?.name} />
-      </Form.Item>
-      <Form.Item name="budget" label="budget" rules={[{ required: true }]}>
-        <Input defaultValue={event?.budget} />
-      </Form.Item>
-      <Form.Item name="date" label="date" rules={[{ required: true }]}>
-        <RangePicker
-          showTime
-          defaultValue={[dayjs(event?.start_at), dayjs(event?.end_at)]}
+    <form onSubmit={onFinish}>
+      <FormControl>
+        <FormLabel htmlFor="name">イベント名</FormLabel>
+        <Input
+          type="text"
+          {...register("name", { required: true, value: event?.name })}
         />
-      </Form.Item>
-      <Form.Item
-        name="max_size"
-        label="max_size"
-        rules={[{ required: true, type: "number", min: 1, max: 10000 }]}
-      >
-        <InputNumber defaultValue={event?.max_size} />
-      </Form.Item>
-      <Form.Item name="location" label="location" rules={[{ required: true }]}>
-        <Input defaultValue={event?.location} />
-      </Form.Item>
-      <Form.Item
-        name="description"
-        label="description"
-        rules={[{ required: true }]}
-      >
-        <Input.TextArea defaultValue={event?.description} />
-      </Form.Item>
+      </FormControl>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+      <FormControl>
+        <FormLabel htmlFor="description">説明</FormLabel>
+        <Textarea
+          {...register("description", {
+            required: true,
+            value: event?.description,
+          })}
+        />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel htmlFor="start_at">開始日時</FormLabel>
+        <Input
+          type="datetime-local"
+          {...register("start_at", { required: true, value: event?.start_at })}
+        />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel htmlFor="end_at">終了日時</FormLabel>
+        <Input
+          type="datetime-local"
+          {...register("end_at", { required: true, value: event?.end_at })}
+        />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel htmlFor="max_size">最大人数</FormLabel>
+        <Input
+          type="number"
+          {...register("max_size", { required: true, value: event?.max_size })}
+        />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel htmlFor="location">場所</FormLabel>
+        <Input
+          type="text"
+          {...register("location", { required: true, value: event?.location })}
+        />
+      </FormControl>
+
+      <FormControl>
+        <FormLabel htmlFor="budget">料金</FormLabel>
+        <Input
+          type="number"
+          {...register("budget", { required: true, value: event?.budget })}
+        />
+      </FormControl>
+
+      <Button variant="solid" type="submit">
+        Submit
+      </Button>
+    </form>
   );
 };
 

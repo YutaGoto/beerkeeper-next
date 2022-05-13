@@ -1,17 +1,21 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-
 import React, { useContext, useEffect } from "react";
-import { Form, Input, Button, Layout } from "antd";
+import { useForm } from "react-hook-form";
+import { NextPage } from "next";
+
 import Header from "../components/Header";
 import { NotificationContext } from "../contexts/NotificationContext";
-import { NextPage } from "next";
 import { axios } from "../lib/axios";
-// import { UserContext } from "../contexts/UserContext";
 import useStorage from "../hook/useStorage";
-
-const { Content } = Layout;
+import {
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 
 interface LoginInfo {
   email?: string;
@@ -21,8 +25,8 @@ interface LoginInfo {
 const Login: NextPage = () => {
   const { setNotification } = useContext(NotificationContext);
   const { setItem } = useStorage();
-  // const { userInfo, setUserInfo } = useContext(UserContext);
   const router = useRouter();
+  const { register, handleSubmit } = useForm<LoginInfo>();
 
   useEffect((): void => {
     if (router.query?.message === "true") {
@@ -42,7 +46,6 @@ const Login: NextPage = () => {
       .post(`/users/login`, body)
       .then((res) => {
         if (res.data.token) {
-          // setUserInfo({ id: res.data.id, token: res.data.token });
           setItem("token", res.data.token);
           setItem("id", res.data.user.id);
           setNotification({
@@ -78,30 +81,26 @@ const Login: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Content className="main-content">
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 8 }}
-          initialValues={{ remember: true }}
-          onFinish={onSubmit}
-          autoComplete="off"
-        >
-          <Form.Item label="email" name="email" rules={[{ type: "email" }]}>
-            <Input />
-          </Form.Item>
+      <Container>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl>
+            <FormLabel htmlFor="email">メールアドレス</FormLabel>
+            <Input type="email" {...register("email", { required: true })} />
+          </FormControl>
 
-          <Form.Item label="password" name="password">
-            <Input.Password />
-          </Form.Item>
+          <FormControl>
+            <FormLabel htmlFor="password">パスワード</FormLabel>
+            <Input
+              type="password"
+              {...register("password", { required: true })}
+            />
+          </FormControl>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Login
-            </Button>
-          </Form.Item>
-        </Form>
-      </Content>
+          <Button type="submit" variant="solid" isLoading={false}>
+            ログイン
+          </Button>
+        </form>
+      </Container>
     </>
   );
 };

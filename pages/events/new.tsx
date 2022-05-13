@@ -1,45 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/dist/client/router";
-import {
-  Layout,
-  Typography,
-  Row,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  DatePicker,
-  Button,
-  notification,
-} from "antd";
-
-import { dateToString } from "../../utils/DateString";
 import Header from "../../components/Header";
 import useUser from "../../data/set-user";
 import { axios } from "../../lib/axios";
-
-const { Title } = Typography;
-const { RangePicker } = DatePicker;
-const { Content } = Layout;
+import { Container } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import { EventFormType } from "../../types";
+import EventForm from "../../components/EventForm";
+import { NotificationContext } from "../../contexts/NotificationContext";
 
 const NewEvent: NextPage = () => {
   const router = useRouter();
   const { loggedOut, token } = useUser();
+  const { register, handleSubmit } = useForm<EventFormType>();
+  const { setNotification } = useContext(NotificationContext);
 
   if (loggedOut) {
     router.replace("/login");
     return null;
   }
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: EventFormType) => {
     const postBody = {
       name: values.name,
       budget: values.budget,
-      start_at: dateToString(values.date[0]._d),
-      end_at: dateToString(values.date[1]._d),
+      start_at: values.start_at,
+      end_at: values.end_at,
       max_size: values.max_size,
       location: values.location,
       description: values.description,
@@ -57,8 +46,9 @@ const NewEvent: NextPage = () => {
       })
       .catch((err) => {
         console.log(err);
-        notification.warn({
-          message: `エラーが発生しました。もう一度試してください。${err.message}`,
+        setNotification({
+          type: "error",
+          body: "エラーが発生しました。もう一度試してください",
         });
         return;
       });
@@ -72,70 +62,13 @@ const NewEvent: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>
-        <Header />
+      <Header />
 
-        <Content className="main-content">
-          <Row>
-            <Col span={18} offset={3} className="">
-              <Title>新規イベント作成</Title>
+      <Container className="main-content">
+        <h1>新規イベント作成</h1>
 
-              <Form onFinish={onFinish}>
-                <Form.Item
-                  name="name"
-                  label="name"
-                  rules={[{ required: true }]}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  name="budget"
-                  label="budget"
-                  rules={[{ required: true }]}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  name="date"
-                  label="date"
-                  rules={[{ required: true }]}
-                >
-                  <RangePicker showTime />
-                </Form.Item>
-                <Form.Item
-                  name="max_size"
-                  label="max_size"
-                  rules={[
-                    { required: true, type: "number", min: 1, max: 10000 },
-                  ]}
-                >
-                  <InputNumber />
-                </Form.Item>
-                <Form.Item
-                  name="location"
-                  label="location"
-                  rules={[{ required: true }]}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  name="description"
-                  label="description"
-                  rules={[{ required: true }]}
-                >
-                  <Input.TextArea />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Col>
-          </Row>
-        </Content>
-      </Layout>
+        <EventForm onFinish={handleSubmit(onFinish)} register={register} />
+      </Container>
     </div>
   );
 };
