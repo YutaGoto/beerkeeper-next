@@ -6,7 +6,6 @@ import useSWR from "swr";
 import { Container, SimpleGrid, Text } from "@chakra-ui/react";
 
 import { UserProfile } from "../types/user";
-import Header from "../components/Header";
 import fetcher from "../lib/fetcher";
 import useUser from "../data/set-user";
 import EventBox from "../components/EventBox";
@@ -33,8 +32,6 @@ const Home: NextPage = () => {
         <meta name="description" content="beerkeeper" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Header />
 
       <Container maxW="3xl">
         {data && <Text fontSize="xl">こんにちは、{data.user.name}</Text>}

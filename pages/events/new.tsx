@@ -3,7 +3,6 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/dist/client/router";
-import Header from "../../components/Header";
 import useUser from "../../data/set-user";
 import { axios } from "../../lib/axios";
 import { Container, Text } from "@chakra-ui/react";
@@ -62,12 +61,14 @@ const NewEvent: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
-
       <Container maxW="3xl">
         <Text fontSize="2xl">新規イベント作成</Text>
 
-        <EventForm onFinish={handleSubmit(onFinish)} register={register} />
+        <EventForm
+          onFinish={handleSubmit(onFinish)}
+          register={register}
+          submitBtnText="作成"
+        />
       </Container>
     </div>
   );
