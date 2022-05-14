@@ -3,14 +3,23 @@ import dynamic from "next/dynamic";
 import useSWR from "swr";
 import Head from "next/head";
 import React, { useContext, useState } from "react";
-import { axios } from "../../lib/axios";
+import {
+  Button,
+  Container,
+  Text,
+  Grid,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Tr,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
+import { axios } from "../../lib/axios";
 import fetcher from "../../lib/fetcher";
-import Header from "../../components/Header";
 import { Event } from "../../types";
 import useUser from "../../data/set-user";
-import { Divider, Button, Container } from "@chakra-ui/react";
 import { NotificationContext } from "../../contexts/NotificationContext";
 
 const EventDetail: NextPage = () => {
@@ -95,40 +104,66 @@ const EventDetail: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Container maxW="3xl">
+        <Text fontSize="5xl">{event.name}</Text>
+        <Text fontSize="md">主催: {event.organizer.name}</Text>
+        <Text fontSize="xl">{event.start_at}</Text>
 
-      <Container className="main-content">
-        <h1>{event.name}</h1>
-        <h2>主催: {event.organizer.name}</h2>
-        <h2>{event.start_at}</h2>
-        <Divider />
-        <h3>詳細</h3>
-        {event.description}
-        {participation ? (
-          <div className="mb-1">
-            <Button
-              colorScheme="red"
-              isActive={!btnLoading}
-              onClick={() => deleteParticipation()}
-            >
-              参加登録解除する
-            </Button>
+        <Grid
+          templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
+          gap={1}
+          mt={3}
+        >
+          <div>
+            <Text fontSize="2xl">詳細</Text>
+            <Text mb={2}>{event.description}</Text>
+            {participation ? (
+              <div className="mb-1">
+                <Button
+                  colorScheme="red"
+                  isActive={!btnLoading}
+                  onClick={() => deleteParticipation()}
+                >
+                  参加登録解除する
+                </Button>
+              </div>
+            ) : (
+              <div className="mb-1">
+                <Button
+                  colorScheme="blue"
+                  isActive={!btnLoading}
+                  onClick={() => submitParticipation()}
+                >
+                  参加登録する
+                </Button>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="mb-1">
-            <Button
-              colorScheme="blue"
-              isActive={!btnLoading}
-              onClick={() => submitParticipation()}
-            >
-              参加登録する
-            </Button>
+          <div>
+            <Table>
+              <Tbody>
+                <Tr>
+                  <Th>料金</Th>
+                  <Td>{event.budget}</Td>
+                </Tr>
+                <Tr>
+                  <Th>場所</Th>
+                  <Td>{event.location}</Td>
+                </Tr>
+                <Tr>
+                  <Th>開催期間</Th>
+                  <Td>
+                    {event.start_at} ～ {event.end_at}
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Th>最大人数</Th>
+                  <Td>{event.max_size}</Td>
+                </Tr>
+              </Tbody>
+            </Table>
           </div>
-        )}
-        {event.budget}
-        {event.start_at} ～ {event.end_at}
-        {event.max_size}
-        {event.location}
+        </Grid>
       </Container>
     </div>
   );

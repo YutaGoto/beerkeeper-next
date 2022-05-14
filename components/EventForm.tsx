@@ -1,18 +1,27 @@
 import { NextComponentType, NextPageContext } from "next";
 import { Event, EventFormType } from "../types";
-import { Button, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  SimpleGrid,
+  Textarea,
+} from "@chakra-ui/react";
 import { UseFormRegister } from "react-hook-form";
 
 interface EventFormProps {
   event?: Event;
   onFinish: (values: any) => void;
   register: UseFormRegister<EventFormType>;
+  submitBtnText: string;
 }
 
 const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
   event,
   onFinish,
   register,
+  submitBtnText,
 }) => {
   return (
     <form onSubmit={onFinish}>
@@ -34,21 +43,26 @@ const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
         />
       </FormControl>
 
-      <FormControl>
-        <FormLabel htmlFor="start_at">開始日時</FormLabel>
-        <Input
-          type="datetime-local"
-          {...register("start_at", { required: true, value: event?.start_at })}
-        />
-      </FormControl>
+      <SimpleGrid columns={2} spacing={4}>
+        <FormControl>
+          <FormLabel htmlFor="start_at">開始日時</FormLabel>
+          <Input
+            type="datetime-local"
+            {...register("start_at", {
+              required: true,
+              value: event?.start_at,
+            })}
+          />
+        </FormControl>
 
-      <FormControl>
-        <FormLabel htmlFor="end_at">終了日時</FormLabel>
-        <Input
-          type="datetime-local"
-          {...register("end_at", { required: true, value: event?.end_at })}
-        />
-      </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="end_at">終了日時</FormLabel>
+          <Input
+            type="datetime-local"
+            {...register("end_at", { required: true, value: event?.end_at })}
+          />
+        </FormControl>
+      </SimpleGrid>
 
       <FormControl>
         <FormLabel htmlFor="max_size">最大人数</FormLabel>
@@ -74,8 +88,8 @@ const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
         />
       </FormControl>
 
-      <Button variant="solid" type="submit">
-        Submit
+      <Button variant="solid" colorScheme="blue" type="submit" mt={1}>
+        {submitBtnText}
       </Button>
     </form>
   );
