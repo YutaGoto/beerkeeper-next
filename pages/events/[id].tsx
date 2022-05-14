@@ -2,39 +2,23 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { axios } from "../../lib/axios";
 import { useRouter } from "next/router";
-import {
-  Layout,
-  Typography,
-  Row,
-  Col,
-  Button,
-  notification,
-  Descriptions,
-  Divider,
-} from "antd";
-import {
-  ClockCircleOutlined,
-  MoneyCollectOutlined,
-  PushpinOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
 
 import fetcher from "../../lib/fetcher";
 import Header from "../../components/Header";
 import { Event } from "../../types";
 import useUser from "../../data/set-user";
-
-const { Title, Paragraph } = Typography;
-const { Content } = Layout;
+import { Divider, Button, Container } from "@chakra-ui/react";
+import { NotificationContext } from "../../contexts/NotificationContext";
 
 const EventDetail: NextPage = () => {
   const router = useRouter();
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
   const { id } = router.query;
   const { loggedOut, token, userId } = useUser();
+  const { setNotification } = useContext(NotificationContext);
 
   if (loggedOut) {
     router.replace("/login");
@@ -60,15 +44,17 @@ const EventDetail: NextPage = () => {
       )
       .then(() => {
         setBtnLoading(false);
-        notification.success({
-          message: "参加登録しました",
+        setNotification({
+          type: "success",
+          body: "参加登録しました",
         });
         return;
       })
-      .catch((err) => {
+      .catch(() => {
         setBtnLoading(false);
-        notification.warn({
-          message: `エラーが発生しました。もう一度試してください。${err.message}`,
+        setNotification({
+          type: "error",
+          body: "エラーが発生しました。もう一度試してください",
         });
         return;
       });
@@ -85,15 +71,17 @@ const EventDetail: NextPage = () => {
       })
       .then(() => {
         setBtnLoading(false);
-        notification.success({
-          message: "参加登録解除しました",
+        setNotification({
+          type: "success",
+          body: "参加登録を解除しました",
         });
         return;
       })
-      .catch((err) => {
+      .catch(() => {
         setBtnLoading(false);
-        notification.warn({
-          message: `エラーが発生しました。もう一度試してください。 ${err.message}`,
+        setNotification({
+          type: "error",
+          body: "エラーが発生しました。もう一度試してください",
         });
         return;
       });
@@ -107,92 +95,41 @@ const EventDetail: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>
-        <Header />
+      <Header />
 
-        <Content className="main-content">
-          <Row>
-            <Col md={{ span: 18, offset: 4 }} sm={{ span: 22, offset: 1 }}>
-              <Title>{event.name}</Title>
-              <Title level={3}>主催: {event.organizer.name}</Title>
-              <Title level={5}>{event.start_at}</Title>
-
-              <Divider />
-              <Row>
-                <Col md={15} sm={24}>
-                  <Paragraph>
-                    <Title level={4}>詳細</Title>
-                    {event.description}
-                  </Paragraph>
-
-                  {participation ? (
-                    <div className="mb-1">
-                      <Button
-                        danger
-                        type="primary"
-                        loading={btnLoading}
-                        onClick={() => deleteParticipation()}
-                      >
-                        参加登録解除する
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="mb-1">
-                      <Button
-                        type="primary"
-                        loading={btnLoading}
-                        onClick={() => submitParticipation()}
-                      >
-                        参加登録する
-                      </Button>
-                    </div>
-                  )}
-                </Col>
-                <Col lg={9} md={24}>
-                  <Descriptions column={1} bordered>
-                    <Descriptions.Item
-                      label={
-                        <>
-                          <MoneyCollectOutlined /> <span>料金</span>
-                        </>
-                      }
-                    >
-                      {event.budget}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <>
-                          <ClockCircleOutlined /> <span>日時</span>
-                        </>
-                      }
-                    >
-                      {event.start_at} ～ {event.end_at}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <>
-                          <UserOutlined /> <span>最大人数</span>
-                        </>
-                      }
-                    >
-                      {event.max_size}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <>
-                          <PushpinOutlined /> <span>場所</span>
-                        </>
-                      }
-                    >
-                      {event.location}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Content>
-      </Layout>
+      <Container className="main-content">
+        <h1>{event.name}</h1>
+        <h2>主催: {event.organizer.name}</h2>
+        <h2>{event.start_at}</h2>
+        <Divider />
+        <h3>詳細</h3>
+        {event.description}
+        {participation ? (
+          <div className="mb-1">
+            <Button
+              colorScheme="red"
+              isActive={!btnLoading}
+              onClick={() => deleteParticipation()}
+            >
+              参加登録解除する
+            </Button>
+          </div>
+        ) : (
+          <div className="mb-1">
+            <Button
+              colorScheme="blue"
+              isActive={!btnLoading}
+              onClick={() => submitParticipation()}
+            >
+              参加登録する
+            </Button>
+          </div>
+        )}
+        {event.budget}
+        {event.start_at} ～ {event.end_at}
+        {event.max_size}
+        {event.location}
+      </Container>
     </div>
   );
 };

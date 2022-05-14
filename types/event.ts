@@ -13,3 +13,14 @@ export type Event = {
   organizer: User;
   participations: Array<Participation>;
 };
+
+export type EventFormType = Pick<
+  Event,
+  | "name"
+  | "location"
+  | "max_size"
+  | "budget"
+  | "description"
+  | "start_at"
+  | "end_at"
+>;
