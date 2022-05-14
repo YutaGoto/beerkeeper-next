@@ -6,7 +6,7 @@ import { useRouter } from "next/dist/client/router";
 import Header from "../../components/Header";
 import useUser from "../../data/set-user";
 import { axios } from "../../lib/axios";
-import { Container } from "@chakra-ui/react";
+import { Container, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { EventFormType } from "../../types";
 import EventForm from "../../components/EventForm";
@@ -64,8 +64,8 @@ const NewEvent: NextPage = () => {
 
       <Header />
 
-      <Container className="main-content">
-        <h1>新規イベント作成</h1>
+      <Container maxW="3xl">
+        <Text fontSize="2xl">新規イベント作成</Text>
 
         <EventForm onFinish={handleSubmit(onFinish)} register={register} />
       </Container>

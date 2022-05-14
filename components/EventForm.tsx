@@ -1,6 +1,12 @@
 import { NextComponentType, NextPageContext } from "next";
 import { Event, EventFormType } from "../types";
-import { Button, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+} from "@chakra-ui/react";
 import { UseFormRegister } from "react-hook-form";
 
 interface EventFormProps {
@@ -74,7 +80,7 @@ const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
         />
       </FormControl>
 
-      <Button variant="solid" type="submit">
+      <Button variant="solid" colorScheme="blue" type="submit" mt={1}>
         Submit
       </Button>
     </form>

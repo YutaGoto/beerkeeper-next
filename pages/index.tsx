@@ -3,12 +3,13 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import useSWR from "swr";
-import { Container } from "@chakra-ui/react";
+import { Container, SimpleGrid, Text } from "@chakra-ui/react";
 
 import { UserProfile } from "../types/user";
 import Header from "../components/Header";
 import fetcher from "../lib/fetcher";
 import useUser from "../data/set-user";
+import EventBox from "../components/EventBox";
 
 interface ResData {
   message: string;
@@ -35,20 +36,21 @@ const Home: NextPage = () => {
 
       <Header />
 
-      <Container>
-        <h1>Beerkeeper</h1>
-        {data && <p>Hello, {data.user.name}</p>}
+      <Container maxW="3xl">
+        {data && <Text fontSize="xl">こんにちは、{data.user.name}</Text>}
 
-        <h2>主催中イベント</h2>
-        {data &&
-          data.user.organizing_events.map((organizing_event) => (
-            <div key={organizing_event.id}>{organizing_event.name}</div>
-          ))}
+        <Text fontSize="2xl">主催中イベント</Text>
+        <SimpleGrid columns={3} spacing={4}>
+          {data &&
+            data.user.organizing_events.map((organizing_event) => (
+              <EventBox event={organizing_event} key={organizing_event.id} />
+            ))}
+        </SimpleGrid>
 
-        <h2>参加イベント</h2>
+        <Text fontSize="2xl">参加イベント</Text>
         {data &&
           data.user.events.map((event) => (
-            <div key={event.id}>{event.name}</div>
+            <EventBox event={event} key={event.id} />
           ))}
       </Container>
     </>

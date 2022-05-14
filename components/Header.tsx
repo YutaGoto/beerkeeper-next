@@ -1,9 +1,10 @@
-import { Flex, Link, Stack, Text } from "@chakra-ui/react";
+import { Flex, Link as ChakraLink, Stack, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { NotificationContext } from "../contexts/NotificationContext";
 import useStorage from "../hook/useStorage";
 import { useToken } from "../hook/useToken";
+import { ModifiedLink } from "./Link";
 
 const Header = () => {
   const { setNotification } = useContext(NotificationContext);
@@ -33,8 +34,8 @@ const Header = () => {
         w="100%"
         mb={8}
         p={4}
-        bg="gray.800"
-        color={["white", "white", "primary.700", "primary.700"]}
+        bg="gray.100"
+        color="black"
       >
         <Stack
           spacing={8}
@@ -43,13 +44,23 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <Link href="/events/new">
-            <Text display="block">イベントを作る</Text>
-          </Link>
+          <ModifiedLink
+            passHref={true}
+            href="/"
+            _hover={{ textDecoration: "none" }}
+          >
+            <Text fontWeight="bold" fontSize="lg">
+              Beerkeeper
+            </Text>
+          </ModifiedLink>
 
-          <Link onClick={handleLogout}>
+          <ModifiedLink passHref={true} href="/events/new">
+            <Text display="block">イベントを作る</Text>
+          </ModifiedLink>
+
+          <ChakraLink onClick={handleLogout}>
             <Text display="block">ログアウト</Text>
-          </Link>
+          </ChakraLink>
         </Stack>
       </Flex>
     );
@@ -65,7 +76,19 @@ const Header = () => {
         p={4}
         bg="gray.800"
         color={["white", "white", "primary.700", "primary.700"]}
-      ></Flex>
+      >
+        <Stack
+          spacing={8}
+          align="center"
+          justify={["center", "space-between", "flex-end", "flex-end"]}
+          direction={["column", "row", "row", "row"]}
+          pt={[4, 4, 0, 0]}
+        >
+          <Text fontWeight="bold" fontSize="lg">
+            Beerkeeper
+          </Text>
+        </Stack>
+      </Flex>
     );
   }
 };
