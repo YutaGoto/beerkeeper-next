@@ -2506,8 +2506,8 @@ __metadata:
   linkType: hard
 
 "framer-motion@npm:^6":
-  version: 6.3.4
-  resolution: "framer-motion@npm:6.3.4"
+  version: 6.3.11
+  resolution: "framer-motion@npm:6.3.11"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     framesync: 6.0.1
@@ -2521,7 +2521,7 @@ __metadata:
   dependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
-  checksum: ea4ea22059f6723804f3890327e4f22c3ead564cbd54dc1df66ff6b010835202e42de0fe325f956074033359904206af72714f01c26859cb80279583908ae3e9
+  checksum: 2333b296a109ec0ef86421453f66a92b63e07930a491102f1007bbe48f40594d8c51a96ca937f8f3f013ba658147049bf1fa9feebc44487b8e7617bb674fb254
   languageName: node
   linkType: hard
 
