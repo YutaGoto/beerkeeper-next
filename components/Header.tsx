@@ -74,8 +74,8 @@ const Header = () => {
         w="100%"
         mb={8}
         p={4}
-        bg="gray.800"
-        color={["white", "white", "primary.700", "primary.700"]}
+        bg="gray.100"
+        color="black"
       >
         <Stack
           spacing={8}
@@ -87,6 +87,14 @@ const Header = () => {
           <Text fontWeight="bold" fontSize="lg">
             Beerkeeper
           </Text>
+
+          <ModifiedLink passHref={true} href="/signup">
+            <Text display="block">サインアップ</Text>
+          </ModifiedLink>
+
+          <ModifiedLink passHref={true} href="/login">
+            <Text display="block">ログイン</Text>
+          </ModifiedLink>
         </Stack>
       </Flex>
     );
