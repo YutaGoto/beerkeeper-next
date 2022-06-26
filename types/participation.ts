@@ -1,5 +1,5 @@
 export type Participation = {
   id?: number;
-  user_id: number;
+  userId: number;
   event: number;
 };

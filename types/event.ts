@@ -5,22 +5,20 @@ export type Event = {
   id?: number;
   name: string;
   location: string;
-  max_size: number;
+  maxSize: number;
   budget: string;
   description: string;
-  start_at: string;
-  end_at: string;
+  startAt: string;
+  endAt: string;
   organizer: User;
   participations: Array<Participation>;
 };
 
 export type EventFormType = Pick<
   Event,
-  | "name"
-  | "location"
-  | "max_size"
-  | "budget"
-  | "description"
-  | "start_at"
-  | "end_at"
->;
+  "name" | "location" | "budget" | "description"
+> & {
+  max_size: number;
+  start_at: string;
+  end_at: string;
+};

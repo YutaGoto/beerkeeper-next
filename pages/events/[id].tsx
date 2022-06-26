@@ -40,7 +40,7 @@ const EventDetail: NextPage = () => {
 
   const event = data.event as Event;
   const participation = event.participations.find(
-    (participation) => participation.user_id === userId
+    (participation) => participation.userId === userId
   );
 
   const submitParticipation = () => {
@@ -107,7 +107,7 @@ const EventDetail: NextPage = () => {
       <Container maxW="3xl">
         <Text fontSize="5xl">{event.name}</Text>
         <Text fontSize="md">主催: {event.organizer.name}</Text>
-        <Text fontSize="xl">{event.start_at}</Text>
+        <Text fontSize="xl">{event.startAt}</Text>
 
         <Grid
           templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
@@ -153,12 +153,12 @@ const EventDetail: NextPage = () => {
                 <Tr>
                   <Th>開催期間</Th>
                   <Td>
-                    {event.start_at} ～ {event.end_at}
+                    {event.startAt} ～ {event.endAt}
                   </Td>
                 </Tr>
                 <Tr>
                   <Th>最大人数</Th>
-                  <Td>{event.max_size}</Td>
+                  <Td>{event.maxSize}</Td>
                 </Tr>
               </Tbody>
             </Table>

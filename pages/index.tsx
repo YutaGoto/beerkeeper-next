@@ -39,8 +39,8 @@ const Home: NextPage = () => {
         <Text fontSize="2xl">主催中イベント</Text>
         <SimpleGrid columns={3} spacing={4}>
           {data &&
-            data.user.organizing_events.map((organizing_event) => (
-              <EventBox event={organizing_event} key={organizing_event.id} />
+            data.user.organizingEvents.map((organizingEvent) => (
+              <EventBox event={organizingEvent} key={organizingEvent.id} />
             ))}
         </SimpleGrid>
 
