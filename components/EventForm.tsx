@@ -50,7 +50,7 @@ const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
             type="datetime-local"
             {...register("start_at", {
               required: true,
-              value: event?.start_at,
+              value: event?.startAt,
             })}
           />
         </FormControl>
@@ -59,7 +59,7 @@ const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
           <FormLabel htmlFor="end_at">終了日時</FormLabel>
           <Input
             type="datetime-local"
-            {...register("end_at", { required: true, value: event?.end_at })}
+            {...register("end_at", { required: true, value: event?.endAt })}
           />
         </FormControl>
       </SimpleGrid>
@@ -68,7 +68,7 @@ const EventForm: NextComponentType<NextPageContext, null, EventFormProps> = ({
         <FormLabel htmlFor="max_size">最大人数</FormLabel>
         <Input
           type="number"
-          {...register("max_size", { required: true, value: event?.max_size })}
+          {...register("max_size", { required: true, value: event?.maxSize })}
         />
       </FormControl>
 

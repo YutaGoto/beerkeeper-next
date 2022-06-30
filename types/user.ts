@@ -11,5 +11,5 @@ export type UserProfile = {
   email: string;
   name: string;
   events: Event[];
-  organizing_events: Event[];
+  organizingEvents: Event[];
 };

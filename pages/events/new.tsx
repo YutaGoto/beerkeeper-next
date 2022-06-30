@@ -33,6 +33,8 @@ const NewEvent: NextPage = () => {
       description: values.description,
     };
 
+    console.log(postBody);
+
     axios
       .post(`/events`, postBody, {
         headers: { Authorization: `Bearer ${token}` },
