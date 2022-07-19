@@ -9,6 +9,7 @@ import { UserProfile } from "../types/user";
 import fetcher from "../lib/fetcher";
 import useUser from "../data/set-user";
 import EventBox from "../components/EventBox";
+import { Loading } from "../components/Loading";
 
 interface ResData {
   message: string;
@@ -18,7 +19,9 @@ interface ResData {
 const Home: NextPage = () => {
   const { loggedOut, token } = useUser();
   const router = useRouter();
-  const { data } = useSWR<ResData>([`/users/profile`, token], fetcher);
+  const { data } = useSWR<ResData>([`/users/profile`, token], fetcher, {
+    suspense: true,
+  });
 
   if (loggedOut) {
     router.replace("/login");
