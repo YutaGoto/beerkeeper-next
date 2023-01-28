@@ -1723,10 +1723,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.11.13":
-  version: 18.11.13
-  resolution: "@types/node@npm:18.11.13"
-  checksum: b0c1aa3bd2f5df8240e61096a49d6d4be600109b824d23408ec4ba1ec057dc0c60588e09f73b8a60455ad26d367e9c5562fad8403099f885cbc7b4cace83ec4c
+"@types/node@npm:18.11.18":
+  version: 18.11.18
+  resolution: "@types/node@npm:18.11.18"
+  checksum: 03f17f9480f8d775c8a72da5ea7e9383db5f6d85aa5fefde90dd953a1449bd5e4ffde376f139da4f3744b4c83942166d2a7603969a6f8ea826edfb16e6e3b49d
   languageName: node
   linkType: hard
 
@@ -2104,7 +2104,7 @@ __metadata:
     "@chakra-ui/react": ^2.4.3
     "@emotion/react": ^11
     "@emotion/styled": ^11
-    "@types/node": 18.11.13
+    "@types/node": 18.11.18
     "@types/react": 18.0.25
     "@typescript-eslint/eslint-plugin": ^5.43.0
     axios: ^1.2.3
