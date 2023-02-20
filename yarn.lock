@@ -2157,7 +2157,7 @@ __metadata:
     eslint: ^8.30.0
     eslint-config-next: 13.1.1
     eslint-config-prettier: ^8.5.0
-    framer-motion: ^8
+    framer-motion: ^9
     next: 13.0.6
     prettier: ^2.8.3
     react: 18.2.0
@@ -3058,9 +3058,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^8":
-  version: 8.5.3
-  resolution: "framer-motion@npm:8.5.3"
+"framer-motion@npm:^9":
+  version: 9.0.4
+  resolution: "framer-motion@npm:9.0.4"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     "@motionone/dom": ^10.15.3
@@ -3072,7 +3072,7 @@ __metadata:
   dependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
-  checksum: 877cd65b8429f9c8451d4face73fe631926de95653d3fa43df53dff69b6964e2f6b3f29c42d424fd056fe93a41cd9ae7b20804241308ac3775f74ea47e01f95f
+  checksum: 9ef23d81c78785dd2f7f278bad133d96c22fd3a9dcc310521ea220873b0a923ca927dc2d3e8000e221edfcc5bfd6272f752435472e3a8f9b1ef476202ede1ce2
   languageName: node
   linkType: hard
 
