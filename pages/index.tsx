@@ -18,11 +18,15 @@ interface ResData {
 const Home: NextPage = () => {
   const { loggedOut, token } = useUser();
   const router = useRouter();
-  const { data } = useSWR<ResData>([`/users/profile`, token], fetcher, {
-    suspense: true,
-  });
+  const { data } = useSWR<ResData>(
+    `/users/profile`,
+    (url) => fetcher(url, token),
+    {
+      suspense: true,
+    }
+  );
 
-  if (loggedOut) {
+  if (loggedOut || !data?.user) {
     router.replace("/login");
     return null;
   }
