@@ -14,6 +14,9 @@ axios.interceptors.response.use(
     return res;
   },
   (err) => {
+    if (err.response?.status === 401) {
+      return err.response;
+    }
     return Promise.reject(err);
   }
 );
