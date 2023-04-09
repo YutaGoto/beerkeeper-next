@@ -33,9 +33,13 @@ const EventDetail: NextPage = () => {
     router.replace("/login");
   }
 
-  const { data, error } = useSWR([`/events/${id}`, token], fetcher, {
-    suspense: true,
-  });
+  const { data, error } = useSWR(
+    `/events/${id}`,
+    (url) => fetcher(url, token),
+    {
+      suspense: true,
+    }
+  );
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
