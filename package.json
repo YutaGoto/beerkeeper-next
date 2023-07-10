@@ -15,7 +15,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "framer-motion": "^10",
-    "next": "13.3.0",
+    "next": "13.4.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
